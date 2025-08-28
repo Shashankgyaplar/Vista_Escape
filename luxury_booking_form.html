@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Stay - Vista Escapes</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .booking-hero {
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .booking-container {
+            max-width: 1000px;
+            margin: -50px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .booking-form {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .form-header h2 {
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+        
+        .form-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #c4a661;
+            box-shadow: 0 0 0 3px rgba(196, 166, 97, 0.1);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .room-selection {
+            background: #f8f8f8;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .room-option {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .room-option:hover {
+            border-color: #c4a661;
+            background: rgba(196, 166, 97, 0.05);
+        }
+        
+        .room-option.selected {
+            border-color: #c4a661;
+            background: rgba(196, 166, 97, 0.1);
+        }
+        
+        .room-option input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+        
+        .room-info {
+            flex: 1;
+        }
+        
+        .room-info h4 {
+            margin: 0 0 5px 0;
+            color: #1a1a1a;
+        }
+        
+        .room-info p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .room-price {
+            text-align: right;
+        }
+        
+        .room-price .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #c4a661;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .room-price .per-night {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .special-requests {
+            margin-bottom: 30px;
+        }
+        
+        .special-requests textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .booking-summary {
+            background: #f8f8f8;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #1a1a1a;
+        }
+        
+        .submit-section {
+            text-align: center;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #c4a661, #b8945a);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-width: 200px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(196, 166, 97, 0.4);
+        }
+        
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .back-link a {
+            color: #c4a661;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link a:hover {
+            color: #b8945a;
+        }
+        
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .booking-form {
+                padding: 30px 20px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .room-option {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .room-price {
+                text-align: center;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Vista Escapes</h2>
+                <span>Luxury Retreat in the Heart of Bengaluru</span>
+            </div>
+            <div class="nav-menu">
+                <a href="luxury_hotel_booking.html#accommodations">Accommodations</a>
+                <a href="luxury_hotel_booking.html#offers">Offers</a>
+                <a href="luxury_hotel_booking.html#dining">Dining</a>
+                <a href="luxury_hotel_booking.html#contact">Contact</a>
+                <button class="check-rates-btn">Check Rates</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Booking Hero -->
+    <section class="booking-hero">
+        <div class="hero-content">
+            <h1>Book Your Stay</h1>
+            <p>Reconnect with luxury and comfort at Vista Escapes, Bengaluru</p>
+        </div>
+    </section>
+
+    <!-- Booking Form -->
+    <div class="booking-container">
+        <form class="booking-form" id="bookingForm">
+            <div class="form-header">
+                <h2>Reservation Details</h2>
+                <p>Please fill in your details to complete your booking</p>
+            </div>
+
+            <!-- Personal Information -->
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="firstName">First Name *</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name *</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+            </div>
+
+            <!-- Stay Details -->
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="checkIn">Check-in Date *</label>
+                    <input type="date" id="checkIn" name="checkIn" required>
+                </div>
+                <div class="form-group">
+                    <label for="checkOut">Check-out Date *</label>
+                    <input type="date" id="checkOut" name="checkOut" required>
+                </div>
+                <div class="form-group">
+                    <label for="adults">Number of Adults *</label>
+                    <select id="adults" name="adults" required>
+                        <option value="">Select</option>
+                        <option value="1">1 Adult</option>
+                        <option value="2">2 Adults</option>
+                        <option value="3">3 Adults</option>
+                        <option value="4">4 Adults</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="children">Number of Children</label>
+                    <select id="children" name="children">
+                        <option value="0">0 Children</option>
+                        <option value="1">1 Child</option>
+                        <option value="2">2 Children</option>
+                        <option value="3">3 Children</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Room Selection -->
+            <div class="room-selection">
+                <h3>Select Your Room</h3>
+                <div class="room-option">
+                    <input type="radio" id="deluxe" name="roomType" value="deluxe" required>
+                    <div class="room-info">
+                        <h4>Deluxe Room</h4>
+                        <p>Bright, sleek and stylish rooms with city views and intuitive technology</p>
+                    </div>
+                    <div class="room-price">
+                        <div class="price">₹25,000</div>
+                        <div class="per-night">per night</div>
+                    </div>
+                </div>
+                <div class="room-option">
+                    <input type="radio" id="premier" name="roomType" value="premier">
+                    <div class="room-info">
+                        <h4>Premier Room</h4>
+                        <p>Higher floors with panoramic views and abundant natural light</p>
+                    </div>
+                    <div class="room-price">
+                        <div class="price">₹32,000</div>
+                        <div class="per-night">per night</div>
+                    </div>
+                </div>
+                <div class="room-option">
+                    <input type="radio" id="club" name="roomType" value="club">
+                    <div class="room-info">
+                        <h4>Club Room</h4>
+                        <p>Pool-view rooms with Club Lounge access and daily cocktail hours</p>
+                    </div>
+                    <div class="room-price">
+                        <div class="price">₹38,000</div>
+                        <div class="per-night">per night</div>
+                    </div>
+                </div>
+                <div class="room-option">
+                    <input type="radio" id="cityscape" name="roomType" value="cityscape">
+                    <div class="room-info">
+                        <h4>Four Seasons Cityscape Suite</h4>
+                        <p>Sleek suites with separate work and living areas, perfect for business travelers</p>
+                    </div>
+                    <div class="room-price">
+                        <div class="price">₹65,000</div>
+                        <div class="per-night">per night</div>
+                    </div>
+                </div>
+                <div class="room-option">
+                    <input type="radio" id="garden" name="roomType" value="garden">
+                    <div class="room-info">
+                        <h4>Garden Suite</h4>
+                        <p>Private garden balcony with gazebo and alfresco dining options</p>
+                    </div>
+                    <div class="room-price">
+                        <div class="price">₹85,000</div>
+                        <div class="per-night">per night</div>
+                    </div>
+                </div>
+                <div class="room-option">
+                    <input type="radio" id="presidential" name="roomType" value="presidential">
+                    <div class="room-info">
+                        <h4>Presidential Suite</h4>
+                        <p>Ultimate luxury with private gym, study, and personal attendant service</p>
+                    </div>
+                    <div class="room-price">
+                        <div class="price">₹2,50,000</div>
+                        <div class="per-night">per night</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Special Requests -->
+            <div class="special-requests">
+                <label for="specialRequests">Special Requests</label>
+                <textarea id="specialRequests" name="specialRequests" placeholder="Any special requests or preferences for your stay..."></textarea>
+            </div>
+
+            <!-- Booking Summary -->
+            <div class="booking-summary">
+                <h3>Booking Summary</h3>
+                <div class="summary-item">
+                    <span>Room Type:</span>
+                    <span id="summaryRoom">Not selected</span>
+                </div>
+                <div class="summary-item">
+                    <span>Check-in:</span>
+                    <span id="summaryCheckIn">Not selected</span>
+                </div>
+                <div class="summary-item">
+                    <span>Check-out:</span>
+                    <span id="summaryCheckOut">Not selected</span>
+                </div>
+                <div class="summary-item">
+                    <span>Duration:</span>
+                    <span id="summaryDuration">0 nights</span>
+                </div>
+                <div class="summary-item">
+                    <span>Total Amount:</span>
+                    <span id="summaryTotal">₹0</span>
+                </div>
+            </div>
+
+            <!-- Submit Section -->
+            <div class="submit-section">
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Confirm Booking
+                    <span class="loading-spinner" id="loadingSpinner"></span>
+                </button>
+            </div>
+        </form>
+
+        <div class="back-link">
+            <a href="index.html">← Back to Hotel Overview</a>
+        </div>
+    </div>
+
+    <script src="luxury_booking_script.js"></script>
+</body>
+</html>
